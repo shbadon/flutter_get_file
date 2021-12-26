@@ -252,6 +252,7 @@ Future<void> createMainDart() async {
     String text = '''
 import 'package:flutter/material.dart';
 
+
 void main() {
  runApp(const MyApp());
 }
