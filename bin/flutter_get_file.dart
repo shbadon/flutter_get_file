@@ -230,11 +230,13 @@ flutter:
     - assets/sounds/
     - assets/videos/
 
-  fonts:
-        
+#  fonts:
+#        
 #    - family: FontFamilyName
 #      fonts:
 #        - asset: assets\\fonts\\name.extension    
+ 
+   
     
 ''';
     final File file =
