@@ -226,7 +226,7 @@ flutter:
     - assets/anim/
     - assets/icons/
     - assets/images/
-    - assets/logo/
+    - assets/logos/
     - assets/sounds/
     - assets/videos/
 
