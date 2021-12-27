@@ -27,7 +27,7 @@ void main(List<String> arguments) async {
   await createConstantsDirectory();
   await createControllersDirectory();
   await createModelsDirectory();
-  await createExtensionDirectory();
+  await createExtensionsDirectory();
   await createObjectsDirectory();
   await createServicesDirectory();
   await createUtilsDirectory();
@@ -125,13 +125,14 @@ Future<void> createModelsDirectory() async {
   }
 }
 
-Future<void> createExtensionDirectory() async {
+Future<void> createExtensionsDirectory() async {
   try {
-    String viewPath = "${path.current}/lib/";
-    await Directory('${viewPath}extension').create(recursive: true);
-    print('Extension Directory Creation... \u2713');
+    await File('${path.current}/lib/extensions/extension.dart')
+        .create(recursive: true);
+
+    print('Extensions Directory Creation... \u2713');
   } catch (error) {
-    print('Extension Directory Creation... \u2715 :  Error:- $error');
+    print('Extensions Directory Creation... \u2715 :  Error:- $error');
   }
 }
 
@@ -276,7 +277,7 @@ class MyApp extends StatelessWidget {
     
 ''';
     final File file =
-    await File('${path.current}/lib/main.dart').create(recursive: true);
+        await File('${path.current}/lib/main.dart').create(recursive: true);
     await file.writeAsString(text);
 
     print('Main File Creation... \u2713');
@@ -284,3 +285,5 @@ class MyApp extends StatelessWidget {
     print('Main File Creation... \u2715 :  Error:- $error');
   }
 }
+// dart compile
+// dart compile exe bin/flutter_get_file.dart && dart compile aot-snapshot bin/flutter_get_file.dart
