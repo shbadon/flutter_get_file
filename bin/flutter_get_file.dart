@@ -1,12 +1,15 @@
 import 'dart:io';
 import 'package:path/path.dart' as path;
 
+String _projectName = '';
+String _projectSdk = '';
+String _library = '';
+int _totalFile = 12;
+int _count = 0;
+
 void main(List<String> arguments) async {
   print(
       'Welcome to Flutter Get File Program. This program created only the "dart file & directory. This program was created by "Shuoib Hossain Badon"');
-
-  String _projectName;
-  String _projectSdk;
 
   while (true) {
     stdout.write('Enter your project name :');
@@ -15,7 +18,7 @@ void main(List<String> arguments) async {
       break;
     }
   }
-
+  _library = "import 'package:$_projectName/$_projectName.dart'";
   while (true) {
     stdout.write('Enter your project sdk name :');
     _projectSdk = stdin.readLineSync().toString();
@@ -23,20 +26,27 @@ void main(List<String> arguments) async {
       break;
     }
   }
-  await createAssetsDirectory();
-  await createConstantsDirectory();
-  await createControllersDirectory();
-  await createModelsDirectory();
-  await createExtensionsDirectory();
-  await createObjectsDirectory();
-  await createServicesDirectory();
-  await createUtilsDirectory();
-  await createViewsDirectory();
-  await createPubspecFile(_projectName, _projectSdk);
-  await createMainDart();
+  await createAssetsDirectory1();
+  await createConstantsDirectory2();
+  await createControllersDirectory3();
+  await createModelsDirectory4();
+  await createExtensionsDirectory5();
+  await createObjectsDirectory6();
+  await createServicesDirectory7();
+  await createUtilsDirectory8();
+  await createViewsDirectory9();
+  await createPubspecFile10();
+  await createLibraryFile11();
+  await createMainDart12();
+  print("\n Total File Creation(12/${_count.toString()})\n");
+  if (_totalFile == _count) {
+    print("Creation Complete 🙂");
+  } else {
+    print("Creation Complete 😞");
+  }
 }
 
-Future<void> createAssetsDirectory() async {
+Future<void> createAssetsDirectory1() async {
   try {
     String viewPath = "${path.current}/assets/";
     await Directory('${viewPath}anim').create(recursive: true);
@@ -47,12 +57,13 @@ Future<void> createAssetsDirectory() async {
     await Directory('${viewPath}sounds').create(recursive: true);
     await Directory('${viewPath}videos').create(recursive: true);
     print('Assets Directory Creation... \u2713');
+    _count++;
   } catch (error) {
     print('Assets Directory Creation... \u2715 :  Error:- $error');
   }
 }
 
-Future<void> createConstantsDirectory() async {
+Future<void> createConstantsDirectory2() async {
   try {
     await createFile('Colors');
     await createFile('Anim');
@@ -84,6 +95,7 @@ export 'app_string.dart';
     await file.writeAsString(text);
 
     print('Constants Directory Creation... \u2713');
+    _count++;
   } catch (error) {
     print('Constants Directory Creation... \u2715 :  Error:- $error');
   }
@@ -91,7 +103,7 @@ export 'app_string.dart';
 
 Future<void> createFile(name) async {
   String text = '''
-import 'package:flutter/material.dart';
+$_library
 
 class App$name {
   App$name._(); 
@@ -105,99 +117,136 @@ class App$name {
   await file.writeAsString(text);
 }
 
-Future<void> createControllersDirectory() async {
+Future<void> createControllersDirectory3() async {
   try {
     String viewPath = "${path.current}/lib/";
     await Directory('${viewPath}controllers').create(recursive: true);
     print('Controllers Directory Creation... \u2713');
+    _count++;
   } catch (error) {
     print('Controllers Directory Creation... \u2715 :  Error:- $error');
   }
 }
 
-Future<void> createModelsDirectory() async {
+Future<void> createModelsDirectory4() async {
   try {
     String viewPath = "${path.current}/lib/";
     await Directory('${viewPath}models').create(recursive: true);
     print('Models Directory Creation... \u2713');
+    _count++;
   } catch (error) {
     print('Models Directory Creation... \u2715 :  Error:- $error');
   }
 }
 
-Future<void> createExtensionsDirectory() async {
+Future<void> createExtensionsDirectory5() async {
   try {
     await File('${path.current}/lib/extensions/extension.dart')
         .create(recursive: true);
 
     print('Extensions Directory Creation... \u2713');
+    _count++;
   } catch (error) {
     print('Extensions Directory Creation... \u2715 :  Error:- $error');
   }
 }
 
-Future<void> createObjectsDirectory() async {
+Future<void> createObjectsDirectory6() async {
   try {
     String viewPath = "${path.current}/lib/";
     await Directory('${viewPath}objects').create(recursive: true);
     print('Objects Directory Creation... \u2713');
+    _count++;
   } catch (error) {
     print('Objects Directory Creation... \u2715 :  Error:- $error');
   }
 }
 
-Future<void> createServicesDirectory() async {
+Future<void> createServicesDirectory7() async {
   try {
     String viewPath = "${path.current}/lib/";
     await Directory('${viewPath}services/database').create(recursive: true);
+
+    String text = '''
+$_library  
+    
+class Navigate {
+  Navigate._();
+  }
+''';
+    final File file = await File('${viewPath}services/navigation/navigate.dart')
+        .create(recursive: true);
+    await file.writeAsString(text);
+
     await Directory('${viewPath}services/navigation').create(recursive: true);
     print('Services Directory Creation... \u2713');
+    _count++;
   } catch (error) {
     print('Services Directory Creation... \u2715 :  Error:- $error');
   }
 }
 
-Future<void> createUtilsDirectory() async {
+Future<void> createUtilsDirectory8() async {
   try {
     String viewPath = "${path.current}/lib/";
     await Directory('${viewPath}utils').create(recursive: true);
+    _count++;
     print('Utils Directory Creation... \u2713');
   } catch (error) {
     print('Utils Directory Creation... \u2715 :  Error:- $error');
   }
 }
 
-Future<void> createViewsDirectory() async {
+Future<void> createViewsDirectory9() async {
   try {
     String viewPath = "${path.current}/lib/";
     String stylePath = '${viewPath}views/styles/';
 
     await Directory('${viewPath}views/screens').create(recursive: true);
     await Directory('${viewPath}views/widgets').create(recursive: true);
-
-    await File('${stylePath}container_style.dart').create(recursive: true);
-    await File('${stylePath}text_style.dart').create(recursive: true);
-    await File('${stylePath}button_style.dart').create(recursive: true);
+    await createStyleFile('Container');
+    await createStyleFile('Text');
+    await createStyleFile('Button');
+    await createStyleFile('Text_Field');
+    await createStyleFile('App_Bar');
     String text = '''
 export 'container_style.dart';
 export 'text_style.dart';
 export 'button_style.dart';
+export 'text_field_style.dart';
+export 'app_bar_style.dart';
 ''';
     final File file =
         await File('${stylePath}style.dart').create(recursive: true);
 
     await file.writeAsString(text);
-
+    _count++;
     print('Views Directory Creation... \u2713');
   } catch (error) {
     print('Views Directory Creation... \u2715 :  Error:- $error');
   }
 }
 
-Future<void> createPubspecFile(name, sdk) async {
+Future<void> createStyleFile(name) async {
+  String text = '''
+$_library
+
+class ${name.replaceAll('_', '')}Style {
+  ${name.replaceAll('_', '')}Style._(); 
+}
+
+''';
+
+  final File file = await File(
+          '${path.current}/lib/views/styles/${name.toString().toLowerCase()}_style.dart')
+      .create(recursive: true);
+  await file.writeAsString(text);
+}
+
+Future<void> createPubspecFile10() async {
   try {
     String text = '''
-name: $name
+name: $_projectName
 description: A new Flutter project.
 
 publish_to: 'none'
@@ -205,7 +254,7 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: '$sdk'
+  sdk: '$_projectSdk'
 
 dependencies:
   flutter:
@@ -243,17 +292,41 @@ flutter:
     final File file =
         await File('${path.current}/pubspec.yaml').create(recursive: true);
     await file.writeAsString(text);
-
+    _count++;
     print('Pubspec File Creation... \u2713');
   } catch (error) {
     print('Pubspec File Creation... \u2715 :  Error:- $error');
   }
 }
 
-Future<void> createMainDart() async {
+Future<void> createLibraryFile11() async {
   try {
     String text = '''
-import 'package:flutter/material.dart';
+library $_projectName; 
+
+export 'package:flutter/material.dart';
+export 'package:flutter/services.dart';
+export 'dart:async';
+export 'dart:math'; 
+export 'constants/constant.dart';
+export 'views/styles/style.dart';
+export 'services/navigation/navigate.dart';
+export 'dart:convert';
+''';
+    final File file = await File('${path.current}/lib/$_projectName.dart')
+        .create(recursive: true);
+    await file.writeAsString(text);
+    _count++;
+    print('Library File Creation... \u2713');
+  } catch (error) {
+    print('Library File Creation... \u2715 :  Error:- $error');
+  }
+}
+
+Future<void> createMainDart12() async {
+  try {
+    String text = '''
+$_library
 
 
 void main() {
@@ -267,6 +340,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
       primarySwatch: Colors.blue,
       ),
@@ -279,7 +353,7 @@ class MyApp extends StatelessWidget {
     final File file =
         await File('${path.current}/lib/main.dart').create(recursive: true);
     await file.writeAsString(text);
-
+    _count++;
     print('Main File Creation... \u2713');
   } catch (error) {
     print('Main File Creation... \u2715 :  Error:- $error');
