@@ -38,12 +38,13 @@ void main(List<String> arguments) async {
   await createPubspecFile10();
   await createLibraryFile11();
   await createMainDart12();
-  print("\n Total File Creation(12/${_count.toString()})\n");
+  print("\nTotal File Creation(12/${_count.toString()})");
   if (_totalFile == _count) {
     print("Creation Complete 🙂");
   } else {
-    print("Creation Complete 😞");
+    print("Creation Complete 🙁");
   }
+  print("\n");
 }
 
 Future<void> createAssetsDirectory1() async {
