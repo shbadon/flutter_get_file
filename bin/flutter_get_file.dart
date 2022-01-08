@@ -18,7 +18,7 @@ void main(List<String> arguments) async {
       break;
     }
   }
-  _library = "import 'package:$_projectName/$_projectName.dart'";
+  _library = "import 'package:$_projectName/$_projectName.dart';";
   while (true) {
     stdout.write('Enter your project sdk name :');
     _projectSdk = stdin.readLineSync().toString();
@@ -232,7 +232,7 @@ Future<void> createStyleFile(name) async {
   String text = '''
 $_library
 
-class ${name.replaceAll('_', '')}Style {
+class App${name.replaceAll('_', '')}Style {
   ${name.replaceAll('_', '')}Style._(); 
 }
 
