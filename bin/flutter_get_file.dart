@@ -233,7 +233,7 @@ Future<void> createStyleFile(name) async {
 $_library
 
 class App${name.replaceAll('_', '')}Style {
-  ${name.replaceAll('_', '')}Style._(); 
+   App${name.replaceAll('_', '')}Style._(); 
 }
 
 ''';
