@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:path/path.dart' as path;
 
 String _projectName = '';
+String _appName = '';
 String _projectSdk = '';
 String _library = '';
 int _totalFile = 12;
@@ -18,6 +19,7 @@ void main(List<String> arguments) async {
       break;
     }
   }
+  makeAppName();
   _library = "import 'package:$_projectName/$_projectName.dart';";
   while (true) {
     stdout.write('Enter your project sdk name :');
@@ -45,6 +47,15 @@ void main(List<String> arguments) async {
     print("Creation Complete 🙁");
   }
   print("\n");
+}
+
+void makeAppName() {
+  final splitData = _projectName.split('_');
+
+  for (String data in splitData) {
+    _appName =
+        _appName + data.substring(0, 1).toUpperCase() + data.substring(1) + ' ';
+  }
 }
 
 Future<void> createAssetsDirectory1() async {
@@ -326,6 +337,8 @@ export 'dart:convert';
 
 Future<void> createMainDart12() async {
   try {
+   final className = _appName.replaceAll(' ','');
+
     String text = '''
 $_library
 
@@ -334,16 +347,16 @@ void main() {
  runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class $className extends StatelessWidget {
+  const $className({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: '$_appName',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-      primarySwatch: Colors.blue,
+     //...
       ),
       home: Container(),
     );
