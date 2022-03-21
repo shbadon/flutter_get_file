@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:intl/intl.dart';
 import 'package:path/path.dart' as path;
 
 String _projectName = '';
@@ -7,6 +8,7 @@ String _projectSdk = '';
 String _library = '';
 int _totalFile = 12;
 int _count = 0;
+String _info = '';
 
 void main(List<String> arguments) async {
   print(
@@ -28,6 +30,7 @@ void main(List<String> arguments) async {
       break;
     }
   }
+  await setInfo();
   await createAssetsDirectory1();
   await createConstantsDirectory2();
   await createControllersDirectory3();
@@ -40,13 +43,15 @@ void main(List<String> arguments) async {
   await createPubspecFile10();
   await createLibraryFile11();
   await createMainDart12();
-  print("\nTotal File Creation(12/${_count.toString()})");
+  await createWidgetTest13();
+  print("\nTotal File Creation(13/${_count.toString()})");
   if (_totalFile == _count) {
     print("Creation Complete 🙂");
   } else {
     print("Creation Complete 🙁");
   }
   print("\n");
+
 }
 
 void makeAppName() {
@@ -56,6 +61,19 @@ void makeAppName() {
     _appName =
         _appName + data.substring(0, 1).toUpperCase() + data.substring(1) + ' ';
   }
+}
+
+Future<void> setInfo() async {
+  final time = DateFormat('MMM dd, yyyy').add_jm().format(DateTime.now());
+  _info = '''
+  
+/*                                     *\\
+          **File Created By**
+      name:- Shuoib Hossain 
+      time:- $time
+      contract:-shuibe873@gmail.com
+\\*                                     */
+''';
 }
 
 Future<void> createAssetsDirectory1() async {
@@ -115,7 +133,9 @@ export 'app_string.dart';
 
 Future<void> createFile(name) async {
   String text = '''
-$_library
+ $_info 
+ 
+// $_library
 
 class App$name {
   App$name._(); 
@@ -124,7 +144,7 @@ class App$name {
 ''';
 
   final File file = await File(
-          '${path.current}/lib/constants/app_${name.toString().toLowerCase()}.dart')
+      '${path.current}/lib/constants/app_${name.toString().toLowerCase()}.dart')
       .create(recursive: true);
   await file.writeAsString(text);
 }
@@ -155,6 +175,13 @@ Future<void> createExtensionsDirectory5() async {
   try {
     await File('${path.current}/lib/extensions/extension.dart')
         .create(recursive: true);
+    String text = '''
+$_info    
+''';
+    final File file =
+    await File('${path.current}/lib/extensions/extension.dart')
+        .create(recursive: true);
+    await file.writeAsString(text);
 
     print('Extensions Directory Creation... \u2713');
     _count++;
@@ -180,8 +207,11 @@ Future<void> createServicesDirectory7() async {
     await Directory('${viewPath}services/database').create(recursive: true);
 
     String text = '''
-$_library  
-    
+ $_info 
+ 
+// $_library
+
+
 class Navigate {
   Navigate._();
   }
@@ -229,7 +259,7 @@ export 'text_field_style.dart';
 export 'app_bar_style.dart';
 ''';
     final File file =
-        await File('${stylePath}style.dart').create(recursive: true);
+    await File('${stylePath}style.dart').create(recursive: true);
 
     await file.writeAsString(text);
     _count++;
@@ -241,7 +271,10 @@ export 'app_bar_style.dart';
 
 Future<void> createStyleFile(name) async {
   String text = '''
-$_library
+ $_info 
+ 
+// $_library
+
 
 class App${name.replaceAll('_', '')}Style {
    App${name.replaceAll('_', '')}Style._(); 
@@ -250,7 +283,7 @@ class App${name.replaceAll('_', '')}Style {
 ''';
 
   final File file = await File(
-          '${path.current}/lib/views/styles/${name.toString().toLowerCase()}_style.dart')
+      '${path.current}/lib/views/styles/${name.toString().toLowerCase()}_style.dart')
       .create(recursive: true);
   await file.writeAsString(text);
 }
@@ -302,7 +335,7 @@ flutter:
     
 ''';
     final File file =
-        await File('${path.current}/pubspec.yaml').create(recursive: true);
+    await File('${path.current}/pubspec.yaml').create(recursive: true);
     await file.writeAsString(text);
     _count++;
     print('Pubspec File Creation... \u2713');
@@ -314,6 +347,8 @@ flutter:
 Future<void> createLibraryFile11() async {
   try {
     String text = '''
+$_info    
+    
 library $_projectName; 
 
 export 'package:flutter/material.dart';
@@ -337,14 +372,14 @@ export 'dart:convert';
 
 Future<void> createMainDart12() async {
   try {
-   final className = _appName.replaceAll(' ','');
+    final className = _appName.replaceAll(' ', '');
 
     String text = '''
 $_library
 
 
 void main() {
- runApp(const MyApp());
+ runApp(const $className());
 }
 
 class $className extends StatelessWidget {
@@ -365,12 +400,60 @@ class $className extends StatelessWidget {
     
 ''';
     final File file =
-        await File('${path.current}/lib/main.dart').create(recursive: true);
+    await File('${path.current}/lib/main.dart').create(recursive: true);
     await file.writeAsString(text);
     _count++;
     print('Main File Creation... \u2713');
   } catch (error) {
     print('Main File Creation... \u2715 :  Error:- $error');
+  }
+}
+
+Future<void> createWidgetTest13() async {
+  try {
+    final className = _appName.replaceAll(' ', '');
+
+    String text = '''
+// This is a basic Flutter widget test.
+//
+// To perform an interaction with a widget in your test, use the WidgetTester
+// utility that Flutter provides. For example, you can send tap and scroll
+// gestures. You can also use WidgetTester to find child widgets in the widget
+// tree, read text, and verify that the values of widget properties are correct.
+
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+import 'package:$_projectName/main.dart';
+
+void main() {
+  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(const $className());
+
+    // Verify that our counter starts at 0.
+    expect(find.text('0'), findsOneWidget);
+    expect(find.text('1'), findsNothing);
+
+    // Tap the '+' icon and trigger a frame.
+    await tester.tap(find.byIcon(Icons.add));
+    await tester.pump();
+
+    // Verify that our counter has incremented.
+    expect(find.text('0'), findsNothing);
+    expect(find.text('1'), findsOneWidget);
+  });
+}
+
+  
+''';
+    final File file = await File('${path.current}/test/widget_test.dart')
+        .create(recursive: true);
+    await file.writeAsString(text);
+    _count++;
+    print('Test File Creation... \u2713');
+  } catch (error) {
+    print('Test File Creation... \u2715 :  Error:- $error');
   }
 }
 // dart compile
