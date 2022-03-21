@@ -6,13 +6,13 @@ String _projectName = '';
 String _appName = '';
 String _projectSdk = '';
 String _library = '';
-int _totalFile = 12;
+int _totalFile = 13;
 int _count = 0;
 String _info = '';
 
 void main(List<String> arguments) async {
   print(
-      'Welcome to Flutter Get File Program. This program created only the "dart file & directory. This program was created by "Shuoib Hossain Badon"');
+      'Welcome to Flutter Get File Program. This program created only the dart file & directory. This program was created by "Shuoib Hossain Badon"');
 
   while (true) {
     stdout.write('Enter your project name :');
