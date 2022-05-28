@@ -51,7 +51,14 @@ void main(List<String> arguments) async {
     print("Creation Complete 🙁");
   }
   print("\n");
+  print('Flutter Pub Get Process Started... ');
 
+  final process =
+      Process.runSync('C:\\flutter\\bin\\flutter.bat', ['pub', 'get']);
+  print(await process.stdout);
+  print(await process.stderr);
+  print('Process Exit Code ${process.exitCode}');
+  print('Program Finished.\n');
 }
 
 void makeAppName() {
@@ -144,7 +151,7 @@ class App$name {
 ''';
 
   final File file = await File(
-      '${path.current}/lib/constants/app_${name.toString().toLowerCase()}.dart')
+          '${path.current}/lib/constants/app_${name.toString().toLowerCase()}.dart')
       .create(recursive: true);
   await file.writeAsString(text);
 }
@@ -179,8 +186,8 @@ Future<void> createExtensionsDirectory5() async {
 $_info    
 ''';
     final File file =
-    await File('${path.current}/lib/extensions/extension.dart')
-        .create(recursive: true);
+        await File('${path.current}/lib/extensions/extension.dart')
+            .create(recursive: true);
     await file.writeAsString(text);
 
     print('Extensions Directory Creation... \u2713');
@@ -259,7 +266,7 @@ export 'text_field_style.dart';
 export 'app_bar_style.dart';
 ''';
     final File file =
-    await File('${stylePath}style.dart').create(recursive: true);
+        await File('${stylePath}style.dart').create(recursive: true);
 
     await file.writeAsString(text);
     _count++;
@@ -283,7 +290,7 @@ class App${name.replaceAll('_', '')}Style {
 ''';
 
   final File file = await File(
-      '${path.current}/lib/views/styles/${name.toString().toLowerCase()}_style.dart')
+          '${path.current}/lib/views/styles/${name.toString().toLowerCase()}_style.dart')
       .create(recursive: true);
   await file.writeAsString(text);
 }
@@ -306,6 +313,12 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
+  flutter_screenutil: ^5.5.3+2
+  recase: ^4.0.0
+  flutter_svg: ^1.1.0
+  http: ^0.13.4
+  connectivity_plus: ^2.3.0
+  bouncing_widget: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -335,7 +348,7 @@ flutter:
     
 ''';
     final File file =
-    await File('${path.current}/pubspec.yaml').create(recursive: true);
+        await File('${path.current}/pubspec.yaml').create(recursive: true);
     await file.writeAsString(text);
     _count++;
     print('Pubspec File Creation... \u2713');
@@ -359,6 +372,11 @@ export 'constants/constant.dart';
 export 'views/styles/style.dart';
 export 'services/navigation/navigate.dart';
 export 'dart:convert';
+export 'dart:io';
+export 'extensions/extension.dart';
+export 'package:recase/recase.dart';
+export 'package:flutter_screenutil/flutter_screenutil.dart';
+export 'package:flutter_svg/flutter_svg.dart';
 ''';
     final File file = await File('${path.current}/lib/$_projectName.dart')
         .create(recursive: true);
@@ -390,9 +408,7 @@ class $className extends StatelessWidget {
     return MaterialApp(
       title: '$_appName',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-     //...
-      ),
+      theme: ThemeData(),
       home: Container(),
     );
   }
@@ -400,7 +416,7 @@ class $className extends StatelessWidget {
     
 ''';
     final File file =
-    await File('${path.current}/lib/main.dart').create(recursive: true);
+        await File('${path.current}/lib/main.dart').create(recursive: true);
     await file.writeAsString(text);
     _count++;
     print('Main File Creation... \u2713');
