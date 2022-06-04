@@ -251,6 +251,7 @@ Future<void> createViewsDirectory9() async {
     String viewPath = "${path.current}/lib/";
     String stylePath = '${viewPath}views/styles/';
 
+    await Directory('${viewPath}views/dialogs').create(recursive: true);
     await Directory('${viewPath}views/screens').create(recursive: true);
     await Directory('${viewPath}views/widgets').create(recursive: true);
     await createStyleFile('Container');
