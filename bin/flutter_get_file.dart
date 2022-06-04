@@ -370,7 +370,7 @@ export 'package:flutter/services.dart';
 export 'dart:async';
 export 'dart:math'; 
 export 'constants/constant.dart';
-export 'views/styles/style.dart';
+export 'views/styles/styles.dart';
 export 'services/navigation/navigate.dart';
 export 'dart:convert';
 export 'dart:io';
