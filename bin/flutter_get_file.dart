@@ -259,14 +259,14 @@ Future<void> createViewsDirectory9() async {
     await createStyleFile('Text_Field');
     await createStyleFile('App_Bar');
     String text = '''
-export 'container_style.dart';
-export 'text_style.dart';
-export 'button_style.dart';
-export 'text_field_style.dart';
-export 'app_bar_style.dart';
+export 'container_styles.dart';
+export 'text_styles.dart';
+export 'button_styles.dart';
+export 'text_field_styles.dart';
+export 'app_bar_styles.dart';
 ''';
     final File file =
-        await File('${stylePath}style.dart').create(recursive: true);
+        await File('${stylePath}styles.dart').create(recursive: true);
 
     await file.writeAsString(text);
     _count++;
@@ -283,14 +283,14 @@ Future<void> createStyleFile(name) async {
 // $_library
 
 
-class App${name.replaceAll('_', '')}Style {
-   App${name.replaceAll('_', '')}Style._(); 
+class App${name.replaceAll('_', '')}Styles {
+   App${name.replaceAll('_', '')}Styles._(); 
 }
 
 ''';
 
   final File file = await File(
-          '${path.current}/lib/views/styles/${name.toString().toLowerCase()}_style.dart')
+          '${path.current}/lib/views/styles/${name.toString().toLowerCase()}_styles.dart')
       .create(recursive: true);
   await file.writeAsString(text);
 }
