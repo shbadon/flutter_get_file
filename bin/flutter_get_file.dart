@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart' as path;
+import 'package:pub_api_client/pub_api_client.dart';
 
 String _projectName = '';
 String _appName = '';
@@ -8,7 +9,6 @@ String _projectSdk = '';
 String _library = '';
 int _totalFile = 13;
 int _count = 0;
-String _info = '';
 
 void main(List<String> arguments) async {
   print(
@@ -30,7 +30,6 @@ void main(List<String> arguments) async {
       break;
     }
   }
-  await setInfo();
   await createAssetsDirectory1();
   await createConstantsDirectory2();
   await createControllersDirectory3();
@@ -70,18 +69,6 @@ void makeAppName() {
   }
 }
 
-Future<void> setInfo() async {
-  final time = DateFormat('MMM dd, yyyy').add_jm().format(DateTime.now());
-  _info = '''
-  
-/*                                     *\\
-          **File Created By**
-      name:- Shuoib Hossain 
-      time:- $time
-      contract:-shuibe873@gmail.com
-\\*                                     */
-''';
-}
 
 Future<void> createAssetsDirectory1() async {
   try {
@@ -140,8 +127,6 @@ export 'app_string.dart';
 
 Future<void> createFile(name) async {
   String text = '''
- $_info 
- 
 // $_library
 
 class App$name {
@@ -182,14 +167,9 @@ Future<void> createExtensionsDirectory5() async {
   try {
     await File('${path.current}/lib/extensions/extension.dart')
         .create(recursive: true);
-    String text = '''
-$_info    
-''';
     final File file =
         await File('${path.current}/lib/extensions/extension.dart')
             .create(recursive: true);
-    await file.writeAsString(text);
-
     print('Extensions Directory Creation... \u2713');
     _count++;
   } catch (error) {
@@ -214,8 +194,6 @@ Future<void> createServicesDirectory7() async {
     await Directory('${viewPath}services/database').create(recursive: true);
 
     String text = '''
- $_info 
- 
 // $_library
 
 
@@ -259,12 +237,14 @@ Future<void> createViewsDirectory9() async {
     await createStyleFile('Button');
     await createStyleFile('Text_Field');
     await createStyleFile('App_Bar');
+    await createThemeFile();
     String text = '''
 export 'container_styles.dart';
 export 'text_styles.dart';
 export 'button_styles.dart';
 export 'text_field_styles.dart';
 export 'app_bar_styles.dart';
+export 'theme.dart';
 ''';
     final File file =
         await File('${stylePath}styles.dart').create(recursive: true);
@@ -279,8 +259,6 @@ export 'app_bar_styles.dart';
 
 Future<void> createStyleFile(name) async {
   String text = '''
- $_info 
- 
 // $_library
 
 
@@ -296,7 +274,34 @@ class App${name.replaceAll('_', '')}Styles {
   await file.writeAsString(text);
 }
 
+Future<void> createThemeFile() async {
+  String text = '''
+// $_library
+
+class AppTheme {
+   AppAppTheme._(); 
+}
+
+''';
+
+  final File file = await File(
+          '${path.current}/lib/views/styles/theme.dart')
+      .create(recursive: true);
+  await file.writeAsString(text);
+}
+
 Future<void> createPubspecFile10() async {
+  final client =  PubClient();
+  final cupertinoIconsVersion = await client.packageInfo('cupertino_icons').then((value) {return value.version;});
+  final flutterScreenutilVersion  = await client.packageInfo('flutter_screenutil').then((value) {return value.version;});
+  final recaseVersion  = await client.packageInfo('recase').then((value) {return value.version;});
+  final flutterSvgVersion  = await client.packageInfo('flutter_svg').then((value) {return value.version;});
+  final httpVersion  = await client.packageInfo('http').then((value) {return value.version;});
+  final connectivityPlusVersion  = await client.packageInfo('connectivity_plus').then((value) {return value.version;});
+  final getVersion  = await client.packageInfo('get').then((value) {return value.version;});;
+  final intlVersion  = await client.packageInfo('intl').then((value) {return value.version;});
+  final sharedPreferencesVersion  = await client.packageInfo('shared_preferences').then((value) {return value.version;});
+  final flutterLintsVersion  = await client.packageInfo('flutter_lints').then((value) {return value.version;});
   try {
     String text = '''
 name: $_projectName
@@ -313,19 +318,21 @@ dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^1.0.2
-  flutter_screenutil: ^5.5.3+2
-  recase: ^4.0.0
-  flutter_svg: ^1.1.0
-  http: ^0.13.4
-  connectivity_plus: ^2.3.0
-  bouncing_widget: ^2.0.0
+  cupertino_icons: ^$cupertinoIconsVersion
+  flutter_screenutil: ^$flutterScreenutilVersion
+  recase: ^$recaseVersion
+  flutter_svg: ^$flutterSvgVersion
+  http: ^$httpVersion
+  connectivity_plus: ^$connectivityPlusVersion
+  get: ^$getVersion
+  intl: ^$intlVersion
+  shared_preferences: ^$sharedPreferencesVersion
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^1.0.0
+  flutter_lints: ^$flutterLintsVersion
 
 flutter:
 
@@ -360,9 +367,7 @@ flutter:
 
 Future<void> createLibraryFile11() async {
   try {
-    String text = '''
-$_info    
-    
+    String text = '''    
 library $_projectName; 
 
 export 'package:flutter/material.dart';
@@ -406,11 +411,17 @@ class $className extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: '$_appName',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(),
-      home: Container(),
+    return ScreenUtilInit(
+      designSize: const Size(375, 812),
+      builder: (context, widget) {
+        return MaterialApp(
+          title: '${_appName.replaceAll(' ','')}',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(),
+          home: widget,
+        );
+      },
+      child:Container(),
     );
   }
 }

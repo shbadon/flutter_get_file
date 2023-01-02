@@ -1,6 +1,6 @@
 name: flutter_get_file
 description: A sample command-line application.
-version: 1.0.2
+version: 1.0.3
 # homepage: https://www.example.com
 
 environment:
@@ -10,6 +10,7 @@ environment:
 dependencies:
   path: ^1.8.1
   intl: ^0.17.0
+  pub_api_client: ^2.3.0
 
 dev_dependencies:
   lints: ^1.0.0
