@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:intl/intl.dart';
 import 'package:path/path.dart' as path;
 import 'package:pub_api_client/pub_api_client.dart';
 
@@ -167,8 +166,7 @@ Future<void> createExtensionsDirectory5() async {
   try {
     await File('${path.current}/lib/extensions/extension.dart')
         .create(recursive: true);
-    final File file =
-        await File('${path.current}/lib/extensions/extension.dart')
+  await File('${path.current}/lib/extensions/extension.dart')
             .create(recursive: true);
     print('Extensions Directory Creation... \u2713');
     _count++;
@@ -298,7 +296,7 @@ Future<void> createPubspecFile10() async {
   final flutterSvgVersion  = await client.packageInfo('flutter_svg').then((value) {return value.version;});
   final httpVersion  = await client.packageInfo('http').then((value) {return value.version;});
   final connectivityPlusVersion  = await client.packageInfo('connectivity_plus').then((value) {return value.version;});
-  final getVersion  = await client.packageInfo('get').then((value) {return value.version;});;
+  final getVersion  = await client.packageInfo('get').then((value) {return value.version;});
   final intlVersion  = await client.packageInfo('intl').then((value) {return value.version;});
   final sharedPreferencesVersion  = await client.packageInfo('shared_preferences').then((value) {return value.version;});
   final flutterLintsVersion  = await client.packageInfo('flutter_lints').then((value) {return value.version;});
