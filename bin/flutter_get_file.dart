@@ -277,7 +277,7 @@ Future<void> createThemeFile() async {
 // $_library
 
 class AppTheme {
-   AppAppTheme._(); 
+   AppTheme._(); 
 }
 
 ''';
